@@ -4,20 +4,20 @@ const { Category } = require("../models/category");
 const express = require("express");
 const router = express.Router();
 
-router.get(`/`, async (req, res) => {
-  // localhost:3000/api/v1/products?categories=2342342,234234
-  let filter = {};
-  if (req.query.categories) {
-    filter = { category: req.query.categories.split(",") };
-  }
+// router.get(`/`, async (req, res) => {
+//   // localhost:3000/api/v1/products?categories=2342342,234234
+//   let filter = {};
+//   if (req.query.categories) {
+//     filter = { category: req.query.categories.split(",") };
+//   }
 
-  const productList = await Product.find(filter).populate("category");
+//   const productList = await Product.find(filter).populate("category");
 
-  if (!productList) {
-    res.status(500).json({ success: false });
-  }
-  res.send(productList);
-});
+//   if (!productList) {
+//     res.status(500).json({ success: false });
+//   }
+//   res.send(productList);
+// });
 
 router.get(`/:id`, async (req, res) => {
   const product = await Product.findById(req.params.id).populate("category");
@@ -79,8 +79,9 @@ router.delete("/:id", (req, res) => {
     });
 });
 
-router.get(`/total`, async (req, res) => {
+router.get(`/get/total`, async (req, res) => {
   const productTotal = await Product.countDocuments();
+  console.log("productTotal.....", productTotal);
 
   if (!productTotal) {
     res.status(500).json({ success: false });
