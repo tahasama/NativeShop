@@ -45,7 +45,7 @@ router.put("/:id", async (req, res) => {
   const user = await User.findByIdAndUpdate(
     req.params.id,
     {
-      $set: req.body,
+      $set: { ...req.body, newPassword },
     },
     { new: true }
   );
