@@ -3,11 +3,15 @@ const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const cors = require("cors");
 const mongoose = require("mongoose");
+
 const express = require("express");
+const authJwt = require("./helpers/jwt");
+const errorHandler = require("./helpers/error-handler");
+
 const app = express();
 
 app.use(cors());
-// app.options("*", cors);
+app.options("*", cors);
 
 // environment variables
 const api = process.env.API_URL;
@@ -15,6 +19,8 @@ const api = process.env.API_URL;
 // middlewares
 app.use(bodyParser.json());
 app.use(morgan("tiny"));
+app.use(authJwt());
+app.use(errorHandler);
 
 //Routes
 const categoriesRoutes = require("./routes/categories");
